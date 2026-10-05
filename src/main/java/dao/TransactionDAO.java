@@ -13,8 +13,11 @@ public class TransactionDAO {
 
 	public List<Transaction> findAll() {
 
+		// new ArrayList<>()で空の箱を用意して、そこにTransactionを入れるようになる。
 		List<Transaction> transactionList = new ArrayList<>();
 
+		/* ①このSELECT文でデータベースの transactions テーブルの行を取り出し、ORDER BY idで昇順に並べている。
+		   ②findAll()では利用者が入力した値は何もないので、?は使う必要がない。 */
 		String sql = "SELECT id, transaction_date, category, amount, description, payment_method "
 				+ "FROM transactions ORDER BY id";
 
@@ -31,8 +34,12 @@ public class TransactionDAO {
 
 					ResultSet rs = pstmt.executeQuery();) {
 
+				/* ①executeQuery()で結果の表であるResultSetを受け取っている。
+				 * ②while (rs.next())は、transactionsテーブルにある表の最後まで繰り返される。
+				 */
 				while (rs.next()) {
 
+					// "transaction_date"は日付で、Java側の変数名はdate。
 					int id = rs.getInt("id");
 					String date = rs.getString("transaction_date");
 					String category = rs.getString("category");
@@ -47,6 +54,7 @@ public class TransactionDAO {
 							amount,
 							description,
 							paymentMethod);
+					// new Transaction()で伝票を1枚作り、addでそれを箱(transactionList)の最後に入れる。
 					transactionList.add(transaction);
 				}
 
