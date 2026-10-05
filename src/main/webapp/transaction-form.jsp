@@ -11,10 +11,16 @@
 
 	<h1>取引登録</h1>
 
+	<%-- TransactionCreateServletに送る。
+		${pageContext.request.contextPath} は /HouseholdBudget に置き換わる。
+   		データ登録のため、postを使う --%>
 	<form
 		action="${pageContext.request.contextPath}/TransactionCreateServlet"
 		method="post">
 
+   		<%-- name=""の部分でServletは日付や金額を見分ける。
+   			requiredがあると、空欄の入力をブラウザがはじいてくれる。
+   			摘要にrequiredがないのは、空欄でも記録として成り立つので、必須にしていない。 --%>
 		<p>
 			日付： <input type="date" name="date" required>
 		</p>
