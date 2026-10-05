@@ -30,7 +30,7 @@ public class TransactionListServlet extends HttpServlet {
 		//  Transaction 1つでは1件の取引しか入らないので、Transactionを何個でも入れられるListで受け取っている。
 		List<Transaction> transactionList = dao.findAll();
 
-		/* ①requestは、**1回のやり取りの間、Servletから JSP まで一緒に運ばれる「お盆」**のようなもの
+		/* ①requestは、1回のやり取りの間、Servletから JSP まで一緒に運ばれる「お盆」のようなもの
 		 *   setAttributeはそのお盆にデータを載せる命令。"transactionList"はデータにつける名札。transactionListは中身。
 		 *   JSPの側では、この名札の名前を使ってデータを取り出す。
 		 * ②forwardでtransaction-list.jspに処理を渡しているのは、リダイレクトだとお盆(request)が新しくなり、載せた

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+// このJSPではJSTL(JSPで繰り返しや条件分岐を書くための部品)を、c:という名前で使います、という宣言。
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
 <!DOCTYPE html>
 <html>
@@ -27,8 +28,15 @@
 			<th>詳細</th>
 		</tr>
 
+		<%-- ①transactionListはTransactionListServletのsetAttributeで付けた名札の名前。
+			 ②c:forEachはTransactionを1件ずつ取り出し、そのたびに表の1行を作っている。
+			 ③var="transaction" は、取り出した1枚に付ける呼び名。 					--%>
 		<c:forEach var="transaction" items="${transactionList}">
 			<tr>
+				<%-- ①Transactionから取り出すとき、裏ではgetメソッドが使われている。
+					 ②?id=${transaction.id}は、取引を指定するためにあり、このリンクはGETで送られる。
+					 TransactionDetailServletがgetParameter("id")でIDを受け取り、DAOのfindByIdでその1件だけを
+					 取り出している。--%>
 				<td>${transaction.id}</td>
 				<td>${transaction.date}</td>
 				<td>${transaction.category}</td>
