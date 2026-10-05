@@ -26,7 +26,7 @@
 
 	<form
 		action="${pageContext.request.contextPath}/TransactionDeleteServlet"
-		method="post">
+		method="post" onsubmit="return confirm('この取引を削除しますか？');">
 		<input type="hidden" name="id" value="${transaction.id}">
 		<button type="submit">削除</button>
 	</form>
