@@ -37,6 +37,34 @@ MVC・DAO・JDBC・CRUDの理解を深めることを目的に制作しました
 - Controller：Servlet→リクエストを受け取り、DAOの呼び出しや画面遷移を担当します。
 - DAO：TransactionDAO→JDBCを利用してH2 DatabaseへのSELECT / INSERT / UPDATE / DELETEを担当します。
 
+## 処理の流れ(登録 → 一覧表示)
+```mermaid
+sequenceDiagram
+    autonumber
+    actor U as 利用者(ブラウザ)
+    participant Form as transaction-form.jsp
+    participant ListJSP as transaction-list.jsp
+    participant CreateServlet as TransactionCreateServlet.java
+    participant ListServlet as TransactionListServlet.java
+    participant DAO as TransactionDAO.java
+    participant DB as H2 Database
+
+U->>Form: 入力して「登録」を押す
+Form->>CreateServlet: 入力内容をPOSTで送る
+CreateServlet->>DAO: insert(transaction)を呼ぶ
+DAO->>DB: INSERT文を実行する
+DB-->>DAO: 追加した行の数(1)を返す
+DAO-->>CreateServlet: true(成功)を返す
+CreateServlet-->>U: リダイレクト
+U->>ListServlet: GETで開き直す
+ListServlet->>DAO: findAll()を呼ぶ
+DAO->>DB: SELECT文を実行する
+DB-->>DAO: 結果の表(ResultSet)を返す
+DAO-->>ListServlet: 伝票の束(Transactionのリスト)を返す
+ListServlet->>ListJSP: requestに載せてフォワード
+ListJSP-->>U: 一覧画面を表示する
+```
+
 ## 起動方法
 - 準備中
 
