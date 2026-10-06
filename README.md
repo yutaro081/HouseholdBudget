@@ -22,19 +22,24 @@ MVC・DAO・JDBC・CRUDの理解を深めることを目的に制作しました
 ## 画面
 ### 一覧画面
 登録した取引を一覧で表示します。「詳細」から各取引の詳細画面に移動できます。
+
 ![一覧画面](docs/images/list.png)
 ### 登録画面
 取引を登録します。
+
 ![登録画面](docs/images/form.png)
 ### 詳細画面
 取引の詳細を表示します。「編集」で取引の編集画面に移動できます。「削除」で削除前の確認に進みます。
+
 ![詳細画面](docs/images/detail.png)
 ### 編集画面
 取引内容の編集ができます。内容を変更してから「更新」を押すと変更が反映され、一覧画面に戻ります。
-![詳細画面](docs/images/edit.png)
+
+![編集画面](docs/images/edit.png)
 ### 削除前の確認
 OKを押すと削除できます。確認画面をはさむことで、間違って削除してしまうことを防ぎます。
-![詳細画面](docs/images/delete-confirm.png)
+
+![削除前の確認](docs/images/delete-confirm.png)
 
 ## 使用技術
 - Java
@@ -130,6 +135,7 @@ CREATE TABLE transactions (
 - 取引のIDを利用して詳細表示・編集・削除を実装した
 
 ## 開発中に発生した問題と解決
+
 ### GitHubへのプッシュが拒否された
 
 EclipseからGitHubへプッシュした際、「git-receive-pack not permitted」というエラーが出た。GitHubのアクセストークンの使えるリポジトリーが限定されていて、新しく作ったHouseholdBudgetが含まれていなかった。
@@ -139,6 +145,14 @@ EclipseからGitHubへプッシュした際、「git-receive-pack not permitted�
 
 ${pageContext.request.contextPath}の`contextPath`の`P`が小文字のままだったり、入力間違いが起こってしまった。エラーメッセージから間違いの行を確認して訂正したり、AIにスクリーンショットを送って問題解決にあたった。
 タイプミスに気を配る、エラーメッセージを読み解く大事さを学んだ。
+
+### JSPで // のコメントを使い、画面に文字が表示されてしまった
+
+Javaのコメントの使い方と間違ってしまった。<%-- --%> に修正した。
+
+### 漢字の多い画面を、Chromeが中国語と判定して自動翻訳してしまった
+
+日本語と認識されるように、<html lang="ja"> を指定した。
 
 ## AIの活用
 
