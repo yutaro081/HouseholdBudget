@@ -129,6 +129,7 @@ CREATE TABLE transactions (
 
 ## 学習・工夫したこと
 
+- 主な処理の説明や流れをコメントで残すことで、ただ入力するだけでなく、コードの理解を深められるようにした。
 - MVCを意識してServletとJSPの役割を分けた
 - DAOを使用してデータベース処理を分離した
 - PreparedStatementを使用してSQLを実行した
