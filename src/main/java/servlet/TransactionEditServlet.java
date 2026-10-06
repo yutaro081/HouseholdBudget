@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.util.List;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -10,6 +11,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import dao.TransactionDAO;
 import model.Transaction;
+import validator.TransactionValidator;
 
 @WebServlet("/TransactionEditServlet")
 public class TransactionEditServlet extends HttpServlet {
@@ -41,9 +43,21 @@ public class TransactionEditServlet extends HttpServlet {
 		int id = Integer.parseInt(request.getParameter("id"));
 		String date = request.getParameter("date");
 		String category = request.getParameter("category");
-		int amount = Integer.parseInt(request.getParameter("amount"));
+		String amountText = request.getParameter("amount");
 		String description = request.getParameter("description");
 		String paymentMethod = request.getParameter("paymentMethod");
+
+		List<String> errors = TransactionValidator.validate(
+				date, category, amountText, description, paymentMethod);
+
+		if (!errors.isEmpty()) {
+			request.setAttribute("errors", errors);
+			request.getRequestDispatcher("/transaction-edit.jsp")
+					.forward(request, response);
+			return;
+		}
+
+		int amount = Integer.parseInt(amountText);
 
 		Transaction transaction = new Transaction(
 				id,
