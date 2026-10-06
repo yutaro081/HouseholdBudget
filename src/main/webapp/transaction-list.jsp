@@ -3,7 +3,7 @@
 <%-- このJSPではJSTL(JSPで繰り返しや条件分岐を書くための部品)を、c:という名前で使います、という宣言。 --%>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
 <meta charset="UTF-8">
 <title>家計簿一覧</title>
