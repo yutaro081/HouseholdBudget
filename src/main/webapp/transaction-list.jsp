@@ -37,12 +37,12 @@
 					 ②?id=${transaction.id}は、取引を指定するためにあり、このリンクはGETで送られる。
 					 TransactionDetailServletがgetParameter("id")でIDを受け取り、DAOのfindByIdでその1件だけを
 					 取り出している。--%>
-				<td>${transaction.id}</td>
-				<td>${transaction.date}</td>
-				<td>${transaction.category}</td>
-				<td>${transaction.amount}</td>
-				<td>${transaction.description}</td>
-				<td>${transaction.paymentMethod}</td>
+				<td><c:out value="${transaction.id}"/></td>
+				<td><c:out value="${transaction.date}"/></td>
+				<td><c:out value="${transaction.category}"/></td>
+				<td><c:out value="${transaction.amount}"/></td>
+				<td><c:out value="${transaction.description}"/></td>
+				<td><c:out value="${transaction.paymentMethod}"/></td>
 				<td><a
 					href="${pageContext.request.contextPath}/TransactionDetailServlet?id=${transaction.id}">
 						詳細 </a></td>

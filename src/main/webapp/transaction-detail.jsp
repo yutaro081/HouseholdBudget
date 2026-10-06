@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@ taglib prefix='c' uri="jakarta.tags.core"%>
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -11,12 +12,12 @@
 
 	<h1>取引詳細</h1>
 
-	<p>ID：${transaction.id}</p>
-	<p>日付：${transaction.date}</p>
-	<p>科目：${transaction.category}</p>
-	<p>金額：${transaction.amount}</p>
-	<p>摘要：${transaction.description}</p>
-	<p>支払方法：${transaction.paymentMethod}</p>
+	<p>ID：<c:out value="${transaction.id}"/></p>
+	<p>日付：<c:out value="${transaction.date}"/></p>
+	<p>科目：<c:out value="${transaction.category}"/></p>
+	<p>金額：<c:out value="${transaction.amount}"/></p>
+	<p>摘要：<c:out value="${transaction.description}"/></p>
+	<p>支払方法：<c:out value="${transaction.paymentMethod}"/></p>
 
 	<p>
 		<a
