@@ -101,7 +101,7 @@ CREATE TABLE transactions (
 ### 起動手順
 1. このリポジトリーをクローンし、Eclipseにインポートする
 2. スタートメニューから「H2 Console」を起動する
-3. タスクトレイのH2アイコンを右クリックし、「Create a new database...」で ~/householdbudget を作る（ユーザー名 sa）
+3. タスクトレイのH2アイコンを右クリックし、「Create a new database...」で `~/householdbudget` を作る（ユーザー名 `sa`）
 4. H2コンソールに接続し、上の「テーブルの作成」のSQLを実行する
    - JDBC URL：`jdbc:h2:tcp://localhost/~/householdbudget`
    - ユーザー名：`sa`、パスワード：なし

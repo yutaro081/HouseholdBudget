@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-// このJSPではJSTL(JSPで繰り返しや条件分岐を書くための部品)を、c:という名前で使います、という宣言。
+<%-- このJSPではJSTL(JSPで繰り返しや条件分岐を書くための部品)を、c:という名前で使います、という宣言。 --%>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
 <!DOCTYPE html>
 <html>
