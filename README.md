@@ -65,6 +65,19 @@ ListServlet->>ListJSP: requestに載せてフォワード
 ListJSP-->>U: 一覧画面を表示する
 ```
 
+## テーブル設計(ER図)
+```mermaid
+erDiagram
+    TRANSACTIONS {
+        INTEGER id PK "自動採番"
+        DATE transaction_date "日付"
+        VARCHAR category "科目"
+        INTEGER amount "金額"
+        VARCHAR description "摘要(任意)"
+        VARCHAR payment_method "支払方法"
+    }
+```
+
 ## 起動方法
 - 準備中
 
