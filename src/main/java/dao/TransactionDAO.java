@@ -16,10 +16,14 @@ public class TransactionDAO {
 		// new ArrayList<>()で空の箱を用意して、そこにTransactionを入れるようになる。
 		List<Transaction> transactionList = new ArrayList<>();
 
-		/* ①このSELECT文でデータベースの transactions テーブルの行を取り出し、ORDER BY idで昇順に並べている。
+		/* ①このSELECT文でデータベースの transactions テーブルの行を取り出し、
+		 * 	JOINで categories とつなぎ、科目名も取り出し、ORDER BY idで昇順に並べている。
 		   ②findAll()では利用者が入力した値は何もないので、?は使う必要がない。 */
-		String sql = "SELECT id, transaction_date, category, amount, description, payment_method "
-				+ "FROM transactions ORDER BY id";
+		String sql = "SELECT t.id, t.transaction_date, t.category_id, c.name AS category_name, "
+				+ "t.amount, t.description, t.payment_method "
+				+ "FROM transactions t "
+				+ "JOIN categories c ON t.category_id = c.id "
+				+ "ORDER BY t.id ";
 
 		try {
 			Class.forName("org.h2.Driver");
@@ -35,14 +39,14 @@ public class TransactionDAO {
 					ResultSet rs = pstmt.executeQuery();) {
 
 				/* ①executeQuery()で結果の表であるResultSetを受け取っている。
-				 * ②while (rs.next())は、transactionsテーブルにある表の最後まで繰り返される。
-				 */
+				   ②while (rs.next())は取り出した結果(ResultSet)の行の数だけ繰り返される。 */
 				while (rs.next()) {
 
 					// "transaction_date"は日付で、Java側の変数名はdate。
 					int id = rs.getInt("id");
 					String date = rs.getString("transaction_date");
-					String category = rs.getString("category");
+					int categoryId = rs.getInt("category_id");
+					String categoryName = rs.getString("category_name");
 					int amount = rs.getInt("amount");
 					String description = rs.getString("description");
 					String paymentMethod = rs.getString("payment_method");
@@ -50,7 +54,8 @@ public class TransactionDAO {
 					Transaction transaction = new Transaction(
 							id,
 							date,
-							category,
+							categoryId,
+							categoryName,
 							amount,
 							description,
 							paymentMethod);
@@ -74,7 +79,7 @@ public class TransactionDAO {
 		 * ③列の一覧にidが入っていないのは、IDはデータベースが自動で番号を振っているため。
 		 */
 		String sql = "INSERT INTO transactions "
-				+ "(transaction_date, category, amount, description, payment_method) "
+				+ "(transaction_date, category_id, amount, description, payment_method) "
 				+ "VALUES (?, ?, ?, ?, ?)";
 
 		// Class.forName("org.h2.Driver"); は、H2 Databaseとやり取りするための部品（ドライバ）を読み込む命令。
@@ -92,11 +97,10 @@ public class TransactionDAO {
 
 					PreparedStatement pstmt = conn.prepareStatement(sql);) {
 
-				/* ①"1"は、SQLの1つ目の"?"を表す。transaction.getDate()の値は、もともと
-				 *    フォームから送られてきたものを TransactionCreateServlet が受け取って Transaction に詰めたもの。
-				 * ②金額は数値なので、金額だけsetIntになっている。 */
+				/* "1"は、SQLの1つ目の"?"を表す。transaction.getDate()の値は、もともと
+					フォームから送られてきたものを TransactionCreateServlet が受け取って Transaction に詰めたもの。 */
 				pstmt.setString(1, transaction.getDate());
-				pstmt.setString(2, transaction.getCategory());
+				pstmt.setInt(2, transaction.getCategoryId());
 				pstmt.setInt(3, transaction.getAmount());
 				pstmt.setString(4, transaction.getDescription());
 				pstmt.setString(5, transaction.getPaymentMethod());
@@ -118,8 +122,11 @@ public class TransactionDAO {
 
 	public Transaction findById(int id) {
 
-		String sql = "SELECT id, transaction_date, category, amount, description, payment_method "
-				+ "FROM transactions WHERE id = ?";
+		String sql = "SELECT t.id, t.transaction_date, t.category_id, c.name AS category_name, "
+				+ "t.amount, t.description, t.payment_method "
+				+ "FROM transactions t "
+				+ "JOIN categories c ON t.category_id = c.id "
+				+ "WHERE t.id = ? ";
 
 		try {
 			Class.forName("org.h2.Driver");
@@ -139,7 +146,8 @@ public class TransactionDAO {
 					if (rs.next()) {
 
 						String date = rs.getString("transaction_date");
-						String category = rs.getString("category");
+						int categoryId = rs.getInt("category_id");
+						String categoryName = rs.getString("category_name");
 						int amount = rs.getInt("amount");
 						String description = rs.getString("description");
 						String paymentMethod = rs.getString("payment_method");
@@ -147,7 +155,8 @@ public class TransactionDAO {
 						return new Transaction(
 								id,
 								date,
-								category,
+								categoryId,
+								categoryName,
 								amount,
 								description,
 								paymentMethod);
@@ -164,7 +173,7 @@ public class TransactionDAO {
 	public boolean update(Transaction transaction) {
 
 		String sql = "UPDATE transactions "
-				+ "SET transaction_date = ?, category = ?, amount = ?, "
+				+ "SET transaction_date = ?, category_id = ?, amount = ?, "
 				+ "description = ?, payment_method = ? "
 				+ "WHERE id = ?";
 
@@ -180,7 +189,7 @@ public class TransactionDAO {
 					PreparedStatement pstmt = conn.prepareStatement(sql);) {
 
 				pstmt.setString(1, transaction.getDate());
-				pstmt.setString(2, transaction.getCategory());
+				pstmt.setInt(2, transaction.getCategoryId());
 				pstmt.setInt(3, transaction.getAmount());
 				pstmt.setString(4, transaction.getDescription());
 				pstmt.setString(5, transaction.getPaymentMethod());

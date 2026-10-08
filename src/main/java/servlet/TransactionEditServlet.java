@@ -9,7 +9,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import dao.CategoryDAO;
 import dao.TransactionDAO;
+import model.Category;
 import model.Transaction;
 import validator.TransactionValidator;
 
@@ -27,11 +29,13 @@ public class TransactionEditServlet extends HttpServlet {
 		String idStr = request.getParameter("id");
 		int id = Integer.parseInt(idStr);
 
+		CategoryDAO categoryDao = new CategoryDAO();
+		List<Category> categoryList = categoryDao.findAll();
 		TransactionDAO dao = new TransactionDAO();
 		Transaction transaction = dao.findById(id);
 
+		request.setAttribute("categoryList", categoryList);
 		request.setAttribute("transaction", transaction);
-
 		request.getRequestDispatcher("/transaction-edit.jsp").forward(request, response);
 	}
 
@@ -42,27 +46,30 @@ public class TransactionEditServlet extends HttpServlet {
 
 		int id = Integer.parseInt(request.getParameter("id"));
 		String date = request.getParameter("date");
-		String category = request.getParameter("category");
+		String categoryIdText = request.getParameter("categoryId");
 		String amountText = request.getParameter("amount");
 		String description = request.getParameter("description");
 		String paymentMethod = request.getParameter("paymentMethod");
 
 		List<String> errors = TransactionValidator.validate(
-				date, category, amountText, description, paymentMethod);
+				date, categoryIdText, amountText, description, paymentMethod);
 
 		if (!errors.isEmpty()) {
 			request.setAttribute("errors", errors);
-			request.getRequestDispatcher("/transaction-edit.jsp")
-					.forward(request, response);
+			CategoryDAO categoryDao = new CategoryDAO();
+			List<Category> categoryList = categoryDao.findAll();
+			request.setAttribute("categoryList", categoryList);
+			request.getRequestDispatcher("/transaction-edit.jsp").forward(request, response);
 			return;
 		}
 
 		int amount = Integer.parseInt(amountText);
+		int categoryId = Integer.parseInt(categoryIdText);
 
 		Transaction transaction = new Transaction(
 				id,
 				date,
-				category,
+				categoryId,
 				amount,
 				description,
 				paymentMethod);

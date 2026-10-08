@@ -89,14 +89,21 @@ ListJSP-->>U: 一覧画面を表示する
 ## テーブル設計(ER図)
 ```mermaid
 erDiagram
+    CATEGORIES {
+        INTEGER id PK "自動採番"
+        VARCHAR name "科目名"
+    }
+
     TRANSACTIONS {
         INTEGER id PK "自動採番"
         DATE transaction_date "日付"
-        VARCHAR category "科目"
+        INTEGER category_id FK "科目ID"
         INTEGER amount "金額"
         VARCHAR description "摘要(任意)"
         VARCHAR payment_method "支払方法"
     }
+
+    CATEGORIES ||--o{ TRANSACTIONS : "分類する"
 ```
 
 ## 起動方法

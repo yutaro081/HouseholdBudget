@@ -4,32 +4,45 @@ public class Transaction {
 
 	private int id;
 	private String date;
-	private String category;
+	private int categoryId;
+	private String categoryName;
 	private int amount;
 	private String description;
 	private String paymentMethod;
 
-	public Transaction(String date, String category, int amount,
+	public Transaction(String date, int categoryId, int amount,
 			String description, String paymentMethod) {
 
 		this.date = date;
-		this.category = category;
+		this.categoryId = categoryId;
 		this.amount = amount;
 		this.description = description;
 		this.paymentMethod = paymentMethod;
 	}
 
-	public Transaction(int id, String date, String category, int amount,
+	public Transaction(int id, String date, int categoryId, int amount,
 			String description, String paymentMethod) {
 
 		this.id = id;
 		this.date = date;
-		this.category = category;
+		this.categoryId = categoryId;
 		this.amount = amount;
 		this.description = description;
 		this.paymentMethod = paymentMethod;
 	}
 
+	public Transaction(int id, String date, int categoryId, String categoryName, int amount,
+			String description, String paymentMethod) {
+
+		this.id = id;
+		this.date = date;
+		this.categoryId = categoryId;
+		this.categoryName = categoryName;
+		this.amount = amount;
+		this.description = description;
+		this.paymentMethod = paymentMethod;
+	}
+	
 	public int getId() {
 		return id;
 	}
@@ -38,8 +51,12 @@ public class Transaction {
 		return date;
 	}
 
-	public String getCategory() {
-		return category;
+	public int getCategoryId() {
+		return categoryId;
+	}
+
+	public String getCategoryName() {
+		return categoryName;
 	}
 
 	public int getAmount() {

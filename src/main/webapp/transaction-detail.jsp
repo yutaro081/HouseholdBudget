@@ -14,7 +14,7 @@
 
 	<p>ID：<c:out value="${transaction.id}"/></p>
 	<p>日付：<c:out value="${transaction.date}"/></p>
-	<p>科目：<c:out value="${transaction.category}"/></p>
+	<p>科目：<c:out value="${transaction.categoryName}"/></p>
 	<p>金額：<c:out value="${transaction.amount}"/></p>
 	<p>摘要：<c:out value="${transaction.description}"/></p>
 	<p>支払方法：<c:out value="${transaction.paymentMethod}"/></p>

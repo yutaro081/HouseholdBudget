@@ -6,7 +6,7 @@ import java.util.List;
 public class TransactionValidator {
 
 	// 入力された5つの値をチェックし、見つかったエラーメッセージの束を返す
-	public static List<String> validate(String date, String category, String amountText,
+	public static List<String> validate(String date, String categoryIdText, String amountText,
 			String description, String paymentMethod) {
 
 		// 入力チェックで見つかったエラーメッセージを入れる箱
@@ -16,11 +16,18 @@ public class TransactionValidator {
 			errors.add("日付を入力してください");
 		}
 
-		//科目：必須、10文字以内
-		if (category == null || category.isBlank()) {
-			errors.add("科目を入力してください");
-		} else if (category.length() > 10) {
-			errors.add("科目は10文字以内で入力してください");
+		if (categoryIdText == null || categoryIdText.isBlank()) {
+			errors.add("科目を選択してください");
+		} else {
+			try {
+				int categoryId = Integer.parseInt(categoryIdText);
+
+				if (categoryId < 1) {
+					errors.add("科目を正しく選択してください");
+				}
+			} catch (NumberFormatException e) {
+				errors.add("科目を正しく選択してください");
+			}
 		}
 
 		// 金額：必須、数字、1円以上100万円未満

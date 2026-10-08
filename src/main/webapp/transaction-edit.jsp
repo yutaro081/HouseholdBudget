@@ -34,9 +34,15 @@
 		</p>
 
 		<p>
-			科目： <input type="text" name="category"
-				value="<c:out value='${empty errors ? transaction.category : param.category}'/>"
-				required>
+			科目： <select name="categoryId" required>
+				<option value="">選択してください</option>
+				<c:forEach var="category" items="${categoryList}">
+					<option value="${category.id}"
+						${(empty errors ? transaction.categoryId : param.categoryId) == category.id ? 'selected' : ''}>
+						<c:out value="${category.name}" />
+					</option>
+				</c:forEach>
+			</select>
 		</p>
 
 
