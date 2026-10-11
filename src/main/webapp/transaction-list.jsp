@@ -7,14 +7,27 @@
 <head>
 <meta charset="UTF-8">
 <title>家計簿一覧</title>
+<style>
+	.menu a {
+		display: inline-block;	/* 枠や余白を付けられるようにする */
+		margin-right: 12px;	/* リンクどうしの間隔 */
+		padding: 4px 12px;	/* 枠の内側の余白 */
+		border: 1px solid #666;	/* 枠線 */
+		text-decoration: none;	/* 下線を消す */
+		color: #000;
+	}
+	.menu a:hover {
+		background-color: #eee;	/*マウスを載せたら背景をうすい灰色にする */
+	}
+</style>
 </head>
 <body>
 
 	<h1>取引一覧</h1>
 
-	<p>
-		<a href="${pageContext.request.contextPath}/TransactionCreateServlet">
-			新しい取引を登録 </a>
+	<p class="menu">
+		<a href="${pageContext.request.contextPath}/TransactionCreateServlet">新しい取引を登録 </a>
+		<a href="${pageContext.request.contextPath}/BudgetSummaryServlet">予実比較を見る</a>
 	</p>
 
 	<table border="1">
